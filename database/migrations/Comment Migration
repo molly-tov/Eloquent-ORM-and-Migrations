@@ -1,0 +1,26 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('comments', function (Blueprint $table) {
+            $table->id(); // Primary key
+            $table->text('comment_content')->comment('Comment text');
+            $table->timestamp('comment_date')->useCurrent()->comment('Date of comment');
+            $table->string('reviewer_name')->nullable()->comment('Reviewer name');
+            $table->string('reviewer_email')->nullable()->comment('Reviewer email');
+            $table->boolean('is_hidden')->default(false)->comment('Is comment hidden');
+            // No timestamps
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('comments');
+    }
+};
